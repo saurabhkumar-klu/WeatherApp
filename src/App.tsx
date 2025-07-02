@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { WeatherData, TemperatureUnit } from './types/weather';
 import { fetchWeatherData, fetchWeatherByCoords } from './utils/weatherApi';
 import { getCurrentUserLocation } from './utils/weatherUtils';
@@ -152,28 +152,30 @@ function App() {
 
   return (
     <div className={`min-h-screen bg-gradient-to-br ${getBackgroundGradient()} transition-all duration-1000`}>
-      <div className="absolute inset-0 bg-black/20"></div>
+      <div className="absolute inset-0 bg-black/30"></div>
       <div className="relative z-10">
-        <div className="container mx-auto px-4 py-8">
-          <div className="text-center mb-8">
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 tracking-tight">
+        <div className="max-w-full w-full px-2 py-4 sm:container sm:mx-auto sm:px-4 sm:py-8">
+          <div className="text-center mb-6 sm:mb-8">
+            <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-2 sm:mb-4 tracking-tight">
               Weather<span className="text-white/80">Flow</span>
             </h1>
-            <p className="text-white/80 text-lg md:text-xl max-w-2xl mx-auto">
+            <p className="text-white/90 text-sm xs:text-base sm:text-lg md:text-xl max-w-full sm:max-w-2xl mx-auto">
               Real-time weather forecasting with beautiful design and comprehensive data
             </p>
             {locationStatus && (
-              <p className="text-white/70 text-sm mt-2 animate-pulse">
+              <p className="text-white/80 text-xs xs:text-sm mt-2 animate-pulse">
                 {locationStatus}
               </p>
             )}
           </div>
 
-          <SearchBar
-            onSearch={handleSearch}
-            onLocationRequest={handleLocationRequest}
-            isLoading={loading}
-          />
+          <div className="w-full max-w-md mx-auto">
+            <SearchBar
+              onSearch={handleSearch}
+              onLocationRequest={handleLocationRequest}
+              isLoading={loading}
+            />
+          </div>
 
           {loading && <LoadingSpinner />}
           
@@ -193,18 +195,19 @@ function App() {
               />
 
               {/* Navigation Tabs */}
-              <div className="flex justify-center mb-8">
-                <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-2 border border-white/20">
-                  <div className="flex space-x-2">
+              <div className="flex justify-center mb-6 sm:mb-8">
+                <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-1 sm:p-2 border border-white/20 w-full max-w-xs sm:max-w-none">
+                  <div className="flex flex-wrap justify-center gap-2">
                     {tabs.map((tab) => (
                       <button
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id as any)}
-                        className={`px-6 py-3 rounded-xl font-medium transition-all duration-300 ${
+                        className={`flex-1 px-2 py-2 sm:px-6 sm:py-3 rounded-xl font-medium transition-all duration-300 text-xs sm:text-base ${
                           activeTab === tab.id
-                            ? 'bg-white/20 text-white shadow-lg'
-                            : 'text-white/70 hover:text-white hover:bg-white/10'
+                            ? 'bg-white/30 text-white shadow-lg'
+                            : 'text-white/80 hover:text-white hover:bg-white/10'
                         }`}
+                        style={{ minWidth: 80 }}
                       >
                         {tab.label}
                       </button>
@@ -270,6 +273,9 @@ function App() {
           )}
         </div>
       </div>
+      <footer className="text-center text-white/60 text-xs py-4">
+        © {new Date().getFullYear()} Developed by Saurabh
+      </footer>
     </div>
   );
 }
